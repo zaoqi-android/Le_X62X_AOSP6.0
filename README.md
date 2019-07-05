@@ -13,7 +13,7 @@ Left key for the menu key, long press the home button for the task management
 * Download [ROM](https://github.com/zaoqi/Le_X62X_AOSP6.0/releases)
 * Insatall [TWRP](https://androidfilehost.com/?fid=962021903579492129) https://forum.xda-developers.com/le-2/development/rom-lineageos-14-1-leeco-le2-pro-x620-t3724749
 * Reboot to recovery
-* Make backup of your current ROM
+* [Optional] Make backup of your current ROM
 * Install ROM
 * Wipe cache, dalvik, data
 * [Optional] Install Google Play Services: [Open source replacement](https://gitlab.com/Nanolx/NanoDroid) or [Proprietary software](https://opengapps.org/)
