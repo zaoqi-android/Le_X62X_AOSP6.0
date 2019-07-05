@@ -19,6 +19,14 @@ Left key for the menu key, long press the home button for the task management
 * [Optional] Install Google Play Services: [Open source replacement](https://gitlab.com/Nanolx/NanoDroid) or [Proprietary software](https://opengapps.org/)
 * [Optional] Root: [Magisk](https://github.com/topjohnwu/Magisk) or [SuperSU](http://www.supersu.com/download)
 
+## Features
+
+* Removed proprietary software (except `Remote Control`)
+* Launcher: [Lawnchair](https://f-droid.org/en/packages/ch.deletescape.lawnchair.plah)
+* Browser: [IceCatMobile](https://f-droid.org/en/packages/org.gnu.icecat)
+* File Manager: [Amaze](https://f-droid.org/en/packages/com.amaze.filemanager)
+* IME: [AnySoftKeyboard](https://f-droid.org/en/packages/com.menny.android.anysoftkeyboard)
+
 ## Build
 
 
