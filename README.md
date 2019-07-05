@@ -24,15 +24,14 @@ Left key for the menu key, long press the home button for the task management
 
 ### Build ZIP
 
-* copy [Le_X620_AOSP6.0_8.8.14@ycjeson.zip](https://pan.baidu.com/s/1kg_UDeLp2NKBnnpDKeMuIg) to the directory `source`
 * run `./make.sh`
 
 ### Requirements
 
-XMLStarlet and curl
+`XMLStarlet`, `curl`, `p7zip`
 
-On Archlinux, run `paman -S xmlstarlet curl`
+On Archlinux, run `paman -S p7zip xmlstarlet curl`
 
-On Debian/Ubuntu systems, run `sudo apt install xmlstarlet curl`
+On Debian/Ubuntu systems, run `sudo apt install p7zip-full xmlstarlet curl`
 
-On Termux, run `apt install findutils gawk zip curl xmlstarlet`
+On Termux, run `apt install findutils gawk zip curl xmlstarlet p7zip`

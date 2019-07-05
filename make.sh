@@ -1,10 +1,29 @@
 #!/bin/sh
+echo "
+    Le_X62X_AOSP6.0 Build Tool
+    Copyright (C) 2019  Zaoqi
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program. If not, see <https://www.gnu.org/licenses/>.
+"
+
+version=0.5
 cd "$(dirname "$0")"
 root="$(pwd)"
 tmp="$root"/tmp
-rom_input="$root"/'source/Le_X620_AOSP6.0_8.8.14@ycjeson.zip'
+rom_input="$root"/'source/Le_X620_AOSP6.0_8.8.14@ycjeson.zip.01'
 rom_unpack="$root"/unpack
-rom_output="$root"/"Le_X620_AOSP6.0@zaoqi@v0.zip"
+rom_output="$root"/"Le_X620_AOSP6.0@zaoqi@v$version.zip"
 fail(){
     echo Failed.
     exit 1
@@ -93,7 +112,7 @@ function download_app() {
   fetch "$DL_URL" "$DL_TMP"
   mkdir -p "$rom_unpack/$DL_PATH"
   cp -v "$DL_TMP" "$rom_unpack/$DL_FILE" ||fail
-  unzip "$DL_TMP" 'lib/*' -d "$rom_unpack/$DL_PATH"
+  7z x -o"$rom_unpack/$DL_PATH" "$DL_TMP" lib
 }
 
 rm -fr "$rom_unpack"
@@ -129,9 +148,9 @@ download_app fdroid com.menny.android.anysoftkeyboard AnySoftKeyboard /system/ap
 
 echo "~~~ Unpacking"
 cd "$rom_unpack" ||fail
-unzip "$rom_input" ||fail
+7z x "$rom_input" ||fail
 
-cat << 'EOF' > "$root/META-INF__com__google__android__updater-script.patch"
+cat << 'EOF' > "$tmp/META-INF__com__google__android__updater-script.patch"
 --- updater-script	2019-07-05 14:55:24.673759642 +0800
 +++ updater-script.zaoqi	2019-07-05 14:55:50.077094439 +0800
 @@ -5,11 +5,12 @@
@@ -159,12 +178,12 @@ cat << 'EOF' > "$root/META-INF__com__google__android__updater-script.patch"
  unmount("/system");
  ui_print("Done!");
 EOF
-patch META-INF/com/google/android/updater-script "$root/META-INF__com__google__android__updater-script.patch" ||fail
+patch META-INF/com/google/android/updater-script "$tmp/META-INF__com__google__android__updater-script.patch" ||fail
 rm -frv META-INF/supersu ||fail
 rm -frv data ||fail
 
-sed -i 's|^\(ro\.build\.display\.id=.*\)$|\1 modded by zaoqi|' ./system/build.prop
-sed -i 's|^\(ro\.mediatek\.version\.release=.*\)$|\1_FOSS_0|' ./system/build.prop
+sed -i 's|^\(ro\.build\.display\.id=\)$|\1Le X62X AOSP 6.0 v$version by zaoqi|' ./system/build.prop
+sed -i 's|^\(ro\.mediatek\.version\.release=\)$|\1v$version|' ./system/build.prop
 sed -i 's|^\(ro\.build\.date=\).*$|\1'"$(LC_TIME="en_GB.UTF-8" date)"'|' ./system/build.prop
 sed -i 's|^\(ro\.product\.locale=\).*$|\1en-US|' ./system/build.prop
 
@@ -188,7 +207,8 @@ rm_system_priv_app launcher # Arrow Launcher
 echo "~~~ Repacking"
 cd "$rom_unpack" ||fail
 rm -f "$rom_output" ||fail
-zip -r "$rom_output" . ||fail
+7z a -tzip -r "$rom_output" . ||fail
 echo "~~~ md5sum"
-md5sum "$rom_output" > "$rom_output".md5
+cd "$(dirname "$rom_output")"
+md5sum "$(basename "$rom_output")" > "$rom_output".md5
 cat "$rom_output".md5 ||fail
