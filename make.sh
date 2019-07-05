@@ -182,9 +182,9 @@ patch META-INF/com/google/android/updater-script "$tmp/META-INF__com__google__an
 rm -frv META-INF/supersu ||fail
 rm -frv data ||fail
 
-sed -i 's|^\(ro\.build\.display\.id=\)$|\1Le X62X AOSP 6.0 v$version by zaoqi|' ./system/build.prop
-sed -i 's|^\(ro\.mediatek\.version\.release=\)$|\1v$version|' ./system/build.prop
-sed -i 's|^\(ro\.build\.date=\).*$|\1'"$(LC_TIME="en_GB.UTF-8" date)"'|' ./system/build.prop
+sed -i 's|^\(ro\.build\.display\.id=\).*$|\1Le X62X AOSP 6.0 '"v$version"' by zaoqi|' ./system/build.prop
+#sed -i 's|^\(ro\.mediatek\.version\.release=\).*$|\1'"v$version"'|' ./system/build.prop
+#sed -i 's|^\(ro\.build\.date=\).*$|\1'"$(LC_TIME="en_GB.UTF-8" date)"'|' ./system/build.prop
 sed -i 's|^\(ro\.product\.locale=\).*$|\1en-US|' ./system/build.prop
 
 rm_system_app(){
